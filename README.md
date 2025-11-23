@@ -1,6 +1,6 @@
 # Dotfiles Repository
 
-This repository contains my personal dotfiles for various software and tools that I use in my **Linux** environment. These configurations provide a highly customized and optimized setup for my workflow, with an emphasis on productivity, aesthetics, and efficiency.
+This repository contains my personal dotfiles for various software and tools that I use in my **Linux** environment inspird by Hyde Dotfiles. These configurations provide a highly customized and optimized setup for my workflow, with an emphasis on productivity, aesthetics, and efficiency.
 
 ### Contents
 - [General Overview](#general-overview)
