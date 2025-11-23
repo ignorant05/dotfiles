@@ -1,0 +1,387 @@
+
+{
+// sourced from header module //
+
+    "layer": "top",
+    "output": [ "*" ],
+    "position": "top",
+    "mod": "dock",
+    "height": 25,
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": true,
+
+
+
+	"modules-left": [
+            "custom/padd",
+            "custom/l_end",
+            "cpu","memory",
+            "custom/r_end",
+            "custom/l_end",
+            "pulseaudio",
+            "pulseaudio#microphone",
+            "custom/r_end",
+            "custom/l_end",
+            "privacy",
+            "tray",
+            "battery",
+            "custom/r_end",
+            "custom/l_end",
+            "clock",
+            "custom/r_end",
+            "custom/padd"
+        ],
+	"modules-center": [
+            "custom/padd",
+            "custom/l_end",
+            "hyprland/workspaces",
+            "hyprland/window",
+            "custom/r_end",
+            "custom/padd"
+        ],
+	"modules-right": [
+            "custom/padd",
+            "custom/l_end",
+            "network",
+            "custom/r_end",
+            "custom/l_end",
+            "custom/cpuinfo",
+            "custom/r_end",
+            "custom/l_end",
+            "custom/gpuinfo",
+            "custom/r_end",
+            "custom/l_end",
+            "custom/wallchange",
+            "custom/theme",
+            "custom/wbar",
+            "custom/cliphist",
+            "custom/power",
+            "custom/r_end",
+            "custom/padd"
+        ],
+
+
+
+    "cpu": {
+        "interval": 10,
+        "format": "󰍛 {usage}%",
+        "rotate": 0,
+        "format-alt": "{icon0}{icon1}{icon2}{icon3}",
+        "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+    },
+
+    "memory": {
+        "states": {
+            "c": 90, // critical
+            "h": 60, // high
+            "m": 30, // medium
+        },
+        "interval": 30,
+        "format": "󰾆 {used} GB",
+        "rotate": 0,
+        "format-m": "󰾅 {used} GB",
+        "format-h": "󰓅 {used} GB",
+        "format-c": " {used} GB",
+        "format-alt": "󰾆 {percentage}%",
+        "max-length": 10,
+        "tooltip": true,
+        "tooltip-format": "󰾆 {percentage}%\n {used:0.1f} GB/{total:0.1f} GB"
+    },
+    "custom/cpuinfo": {
+        "exec": "~/.config/hypr/scripts/cpuinfo.sh",
+        "return-type": "json",
+        "format": "{}",
+        "rotate": 0,
+        "interval": 5, // once every 5 seconds
+        "tooltip": true,
+        "max-length": 1000
+    },
+
+    "custom/gpuinfo": {
+        "exec": "~/.config/hypr/scripts/gpuinfo.sh",
+        "return-type": "json",
+        "format": "{}",
+        "rotate": 0,
+        "interval": 5, // once every 5 seconds
+        "tooltip": true,
+        "max-length": 1000,
+        "on-click": "gpuinfo.sh --toggle",
+    },
+
+    "custom/gpuinfo#nvidia": {
+        "exec": "~/.config/hypr/scripts/gpuinfo.sh --use nvidia ",
+        "return-type": "json",
+        "format": "{}",
+        "rotate": 0,
+        "interval": 5, // once every 5 seconds
+        "tooltip": true,
+        "max-length": 1000,
+    },
+
+    "custom/gpuinfo#amd": {
+        "exec": "~/.config/hypr/scripts/gpuinfo.sh --use amd ",
+        "return-type": "json",
+        "format": "{}",
+        "rotate": 0,
+        "interval": 5, // once every 5 seconds
+        "tooltip": true,
+        "max-length": 1000,
+    },
+
+    "custom/gpuinfo#intel": {
+        "exec": " ~/.config/hypr/scripts/gpuinfo.sh --use intel ",
+        "return-type": "json",
+        "format": "{}",
+        "rotate": 0,
+        "interval": 5, // once every 5 seconds
+        "tooltip": true,
+        "max-length": 1000,
+    },
+
+ 
+    "clock": {
+        "format": "  {:%I:%M %p}",
+        "rotate": 0,
+        "format-alt": " {:%R  󰃭  %d·%m·%y}",
+        "tooltip-format": " {:%d.%m.%Y   Week %W}\n\n<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "mode-mon-col": 3,
+            "on-scroll": 1,
+            "on-click-right": "mode",
+        "format": {
+          "months": "<span color='#cba6f7'><b>{}</b></span>",
+          "days": "<span color='#cdd6f4'><b>{}</b></span>",
+          "weeks": "<span color='#94e2d5'> W{}</span>",
+          "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+          "today": "<span color='#f5e0dc'><b><u>{}</u></b></span>"
+        }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "rotate": 0,
+        "all-outputs": true,
+        "active-only": false,
+        "on-click": "activate",
+        "disable-scroll": false,
+        "on-scroll-up": "hyprctl dispatch workspace -1",
+        "on-scroll-down": "hyprctl dispatch workspace +1",
+        "persistent-workspaces": {
+        }
+    },
+
+    "hyprland/window": {
+        "format": "    {}",
+        "rotate": 0,
+        "separate-outputs": true,
+        "rewrite": {
+            "ignorant05@delusional:(.*)": "$1 ",
+            "(.*) — Mozilla Firefox": "$1 󰈹",
+            "(.*)Mozilla Firefox": "Firefox 󰈹",
+            "(.*) - Visual Studio Code": "$1 󰨞",
+            "(.*)Visual Studio Code": "Code 󰨞",
+            "(.*) - Code - OSS": "$1 󰨞",
+            "(.*)Code - OSS": "Code 󰨞",
+            "(.*) — Dolphin": "$1 󰉋",
+            "(.*)Spotify": "Spotify 󰓇",
+            "(.*)Steam": "Steam 󰓓",
+            "(.*) - Discord": "$1  ",
+            "(.*)Netflix": "Netflix 󰝆 ",
+            "(.*) — Google chrome": "$1  ",
+            "(.*)Google chrome": "Google chrome  ",
+            "(.*) — Github": "$1  ",
+            "(.*)Github": "Github ",
+            "(.*)Spotify Free": "Spotify 󰓇",
+            "(.*)Spotify Premiun": "Spotify 󰓇",
+        },
+        "max-length": 50
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "rotate": 0,
+        "format": "{icon} {percent}%",
+      "format-icons": ["󱩎", "󱩑", "󱩓", "󱩕", "󰛨"],
+        "tooltip-format": "{icon} {percent}% ",
+        "on-scroll-up": "~/.config/hypr/scripts/brightnesscontrol.sh i 1",
+        "on-scroll-down": "~/.config/hypr/scripts/brightnesscontrol.sh d 1",
+        "min-length": 6
+    },
+
+    "network": {  
+      "interval": 2,
+      "format-wifi": "{icon} {bandwidthDownBits} {essid}",
+      "format-ethernet": "󰈀  {bandwidthDownBits}",
+      "format-linked": "󰈀 {ifname} (No IP)",
+      "format-disconnected": "󰖪 ",
+      "min-length": 11,
+      "tooltip": true,
+      "tooltip-format": "{ifname}\n{essid}\n{signalStrength}%\n{frequency} GHz \n󰕒 {bandwidthUpBits}\n󰇚 {bandwidthDownBits}",
+      "tooltip-format-ethernet": "{ifname}\n󰕒 Outgoing {bandwidthUpBits}\n󰇚 Incoming {bandwidthDownBits}",
+      "on-click": "~/.config/hypr/scripts/toggle-network-manager.sh",
+      "format-icons": ["󰤫 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
+      // "format-alt": "<span foreground='#99ffdd'> {bandwidthDownBytes}</span> <span foreground='#ffcc66'> {bandwidthUpBytes}</span>",
+      "states": {
+        "normal": 25
+      }
+    },
+// "bluetooth": {
+// 	"format": " {status}",
+// 	"format-connected": " {device_alias}",
+// 	"format-connected-battery": " {device_alias} {device_battery_percentage}%",
+// 	"tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+// 	"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+// 	"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+// 	"tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+//         "on-click": "~/.config/rofi/waybar/bluetooth/rofi-bluetooth.sh",
+// },
+"pulseaudio": {
+    "format": "{icon}  {volume}",
+    "rotate": 0,
+    "format-muted": "婢 ",
+    "on-click": "pavucontrol -t 3",
+    "on-click-right": "~/.config/hypr/scripts/volumecontrol.sh -s ''",
+    "on-click-middle": "~/.config/hypr/scripts/volumecontrol.sh -o m",
+    "on-scroll-up": "~/.config/hypr/scripts/volumecontrol.sh -o i",
+    "on-scroll-down": "~/.config/hypr/scripts/volumecontrol.sh -o d",
+    "tooltip-format": "{icon} {desc} // {volume}%",
+    "scroll-step": 5,
+    "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", "", ""]
+    }
+},
+
+"pulseaudio#microphone": {
+    "format": " {format_source} ",
+    "rotate": 0,
+    "format-source": "",
+    "format-source-muted": "",
+    "on-click": "pavucontrol -t 4",
+    "on-click-middle": "~/.config/hypr/scripts/volumecontrol.sh -i m",
+    "on-scroll-up": "~/.config/hypr/scripts/volumecontrol.sh -i i",
+    "on-scroll-down": "~/.config/hypr/scripts/volumecontrol.sh -i d",
+    "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
+    "scroll-step": 5
+},
+
+
+    "privacy": {
+        "icon-size": 12,
+        "icon-spacing": 5,
+        "transition-duration": 250,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            }
+        ]
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "rotate": 0,
+        "spacing": 5
+    },
+
+    "battery": {
+        "icon-size": 12,
+        "icon-spacing": 5,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": " {icon} {capacity} % ",
+        "rotate": 0,
+        "format-charging": "  {capacity} %",
+        "format-plugged": "  {capacity} %",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "custom/wallchange": {
+        "format": "  {}",
+        "rotate": 0,
+        "exec": "echo ; echo 󰆊 switch wallpaper",
+        "on-click": "~/.config/rofi/environment/themepaper.s",
+        "on-click-right": "~/.config/rofi/environment/themepaper.sh",
+        "on-click-middle": "sleep 0.1 && s~/.config/rofi/environment/themepaper.sh",
+        "interval" : 86400, // once every day
+        "tooltip": true
+    },
+
+    "custom/theme": {
+        "format": " {}",
+        "rotate": 0,
+        "exec": "echo ; echo 󰟡 switch theme",
+        "on-click": "nwg-look",
+        "on-click-right": "nwg-look",
+        "on-click-middle": "nwg-look",
+        "interval" : 86400, // once every day
+        "tooltip": true
+    },
+
+    "custom/cliphist": {
+        "format": " {}",
+        "rotate": 0,
+        "exec": "echo ; echo 󰅇 clipboard history",
+        "on-click": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh -c",
+        "on-click-right": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh -d",
+        "on-click-middle": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh -w",
+        "interval" : 86400, // once every day
+        "tooltip": true
+    },
+
+    "custom/power": {
+        "format": " {}",
+        "rotate": 0,
+        "exec": "echo ; echo  logout",
+        "on-click": "~/.config/hypr/scripts/logoutlaunch.sh 2",
+        "on-click-right": "~/.config/hypr/scripts/logoutlaunch.sh 1",
+        "interval" : 86400, // once every day
+        "tooltip": true
+    },
+
+
+    "custom/l_end": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/r_end": {
+        "format": " ",
+        "interval" : "once",
+        "tooltip": false
+    },
+
+    "custom/padd": {
+        "format": "  ",
+        "interval" : "once",
+        "tooltip": false
+    }
+
+}
+

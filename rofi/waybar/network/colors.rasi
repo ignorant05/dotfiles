@@ -1,0 +1,10 @@
+@import "~/.config/rofi/colors.rasi"
+
+* {
+	background: @surface;
+	background-alt: @surface;
+	foreground:#cdd6f4ff;
+	selected: @tertiary;
+	active: @primary;
+	urgent: @error;
+}

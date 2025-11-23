@@ -1,0 +1,49 @@
+@define-color bar-bg rgba(31, 35, 40, 0.95);
+
+@define-color main-bg #101419;
+@define-color main-fg #93cee9;
+
+@define-color wb-act-bg #93cee9;
+@define-color wb-act-fg #1f2328;
+
+@define-color wb-hvr-bg #93cee9;
+@define-color wb-hvr-fg #1f2328;
+
+/* @define-color power-fg #292f56; */
+/* @define-color cb-fg #292f56; */
+/* @define-color theme-switch-fg #292f56; */
+/* @define-color wpp-switch-fg #292f56; */
+
+/* @define-color battery-fg #1e4572; */
+/**/
+/* @define-color kb-fg #005c8b; */
+/**/
+/* @define-color mic-fg #292f56; */
+/* @define-color vol-fg #292f56; */
+/**/
+/* @define-color wifi-fg #008ba0; */
+/**/
+/* @define-color brightness-fg #00a3a4; */
+/**/
+/* @define-color workspaces-fg #EDAE48; */
+/* @define-color wins-fg #D1495B; */
+/**/
+/* @define-color dt-fg #00bca1; */
+/**/
+/* @define-color gpu-fg #00d493; */
+/**/
+/* @define-color cpu-fg #69e882; */
+/**/
+/* @define-color mem-fg #acfa70; */
+/* @define-color cores-fg #acfa70; */
+
+/* @define-color bar-bg rgba(31, 35, 40, 0.95); */
+/**/
+/* @define-color main-bg #101419; */
+/* @define-color main-fg #93cee9; */
+/**/
+/* @define-color wb-act-bg #93cee9; */
+/* @define-color wb-act-fg #1f2328; */
+/**/
+/* @define-color wb-hvr-bg #93cee9; */
+/* @define-color wb-hvr-fg #1f2328; */
