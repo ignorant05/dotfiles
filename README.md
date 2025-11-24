@@ -1,6 +1,6 @@
 # Dotfiles Repository
 
-This repository contains my personal dotfiles for various software and tools that I use in my **Linux** environment inspird by Hyde Dotfiles. These configurations provide a highly customized and optimized setup for my workflow, with an emphasis on productivity, aesthetics, and efficiency.
+This repository contains my personal dotfiles for various software and tools that I use in my **Arch Linux** environment inspird by [**Hyde Dotfiles**](https://github.com/HyDE-Project/HyDE). These configurations provide a highly customized and optimized setup for my workflow, with an emphasis on productivity, aesthetics, and efficiency.
 
 ### Contents
 - [General Overview](#general-overview)
@@ -18,7 +18,7 @@ This repository includes configurations for multiple programs and utilities that
 - **Editor**: Neovim
 - **System Utilities**: SwayNC, Waybar, Neofetch, and more.
 - **Appearance & Aesthetics**: wal, rofi, wlogout, qt5ctl, qt6ctl, gtk-3.0 themes.
-- **Login Manager**: SDDM
+- **Display Manager**: SDDM
 
 ---
 
