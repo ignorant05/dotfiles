@@ -14,6 +14,10 @@ export MANPAGER='nvim +Man!'
 # My Shortcuts 
 alias update="sudo pacman -Syu"
 alias i="yay -S"
+alias open="nvim ."
+alias hyprconfig="nvim ~/.config/hypr/"
+alias nvimconfig="nvim ~/.config/nvim/"
+alias zshconfig="nvim ~/.zshrc"
 alias changeSDDMtheme="sudo nvim /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop"
 alias godir="cd ~/Documents/WorksWell/go/"
 alias cppdir="cd ~/Documents/WorksWell/cpp/"
@@ -30,6 +34,7 @@ alias hr="hyprctl reload"
 alias nvf="fd --type f --hidden --strip-cwd-prefix | fzf-tmux -p --reverse | xargs nvim"
 alias he="history | sort -n --reverse | fzf-tmux -p --reverse | xargs hexec"
 alias pk="lsof -i -n | fzf-tmux -p --reverse | awk '{print \$2}' | xargs kill -r"
+alias runpy="python3 dataset.py && python3 repartition_training_test_NF.py && python3 training_model.py && python3 test_model.py"
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -155,7 +160,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 
 # for csharp env
 export PATH="$HOME/.local/share/omnisharp:$PATH"
-
+export PATH="$PATH:/home/pebble/.dotnet/tools"
 # for go env
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
@@ -163,7 +168,10 @@ eval "$(goenv init -)"
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin"
 
+# for python env
+source pebblepython/bin/activate
+
 # Load Angular CLI autocompletion.
 # source <(ng completion script)
 # export PATH="$HOME/.local/share/nvim/mason/packages/jdtls/bin:$PATH"
-IMAGE="/home/pebble/Pictures/Wallpapers/sticks_and_stones.jpg"
+IMAGE="/home/pebble/Pictures/Wallpapers/coming_home.jpg"
