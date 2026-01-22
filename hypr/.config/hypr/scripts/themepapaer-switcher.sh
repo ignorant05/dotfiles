@@ -59,7 +59,7 @@ sed -i "s|^background-image:.*|background-image: url(\"$IMG\", height);|" ~/.con
 
 sed -i "s|\s*path\s*=\s*/home/.*|    path = $IMG|" ~/.config/hypr/hyprlock.conf
 
-sed -i "s|\s*preload\s*=.*|preload = $IMG|" ~/.config/hypr/hyprpaper.conf
-sed -i "s|\s*wallpaper\s*=.*|wallpaper = , $IMG|" ~/.config/hypr/hyprpaper.conf
+# sed -i "s|\s*preload\s*=.*|preload = $IMG|" ~/.config/hypr/hyprpaper.conf
+# sed -i "s|\s*wallpaper\s*=.*|wallpaper = eDP-1,$IMG|" ~/.config/hypr/hyprpaper.conf
 
 source ~/.zshrc
