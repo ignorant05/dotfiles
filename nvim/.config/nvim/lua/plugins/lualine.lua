@@ -2,8 +2,7 @@ plugin = {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
-		-- Eviline config for lualine
-		-- Author: shadmansaleh
+		-- Eviline config for lualine Author: shadmansaleh
 		-- Credit: glepnir
 		local lualine = require("lualine")
 	
@@ -139,21 +138,51 @@ plugin = {
 			end,
 		})
 
-		ins_left({
-			-- filesize component
-			"filesize",
-			cond = conditions.buffer_not_empty,
-		})
+		-- ins_left({
+		-- 	-- filesize component
+		-- 	"filesize",
+		-- 	cond = conditions.buffer_not_empty,
+		-- })
 
 		ins_left({
-			"filename",
-			cond = conditions.buffer_not_empty,
-			color = { fg = colors.magenta, gui = "bold" },
+			"branch",
+			icon = "",
+			color = function()
+				local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD")
+				branch = vim.trim(branch)
+
+				local branch_color = {
+					main = "#ec5f67",
+					master = "#ec5f67",
+				}
+
+				local dynamic_color = function(branch)
+					local default_color = "#c678dd"
+
+					if branch:match("^[Ff]eature/") then
+						return "#98C379"
+					elseif branch:match("^[Ee]nhancement/") then
+						return "#E5C07B"
+					elseif branch:match("^[Ff]ix/") then
+						return "#61AFEF"
+					elseif branch:match("^[Dd]ocumentation") then
+						return "#008080"
+					else
+						return default_color
+					end
+				end
+
+				return { fg = branch_color[branch] or dynamic_color(branch), gui = "bold" }
+			end,
+			fmt = function(branch)
+				return branch
+			end,
 		})
-
-		ins_left({ "location" })
-
-		ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
+		-- ins_left({
+		-- 	"filename",
+		-- 	cond = conditions.buffer_not_empty,
+		-- 	color = { fg = colors.magenta, gui = "bold" },
+		-- })
 
 		ins_left({
 			"diagnostics",
@@ -210,10 +239,19 @@ plugin = {
 			color = { fg = colors.green, gui = "bold" },
 		})
 
+		-- ins_right({
+		-- 	"branch",
+		-- 	icon = "",
+		-- 	color = { fg = colors.violet, gui = "bold" },
+		-- })
+		ins_left({ "location" })
+
+		ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
+
 		ins_right({
-			"branch",
-			icon = "",
-			color = { fg = colors.violet, gui = "bold" },
+			-- filesize component
+			"filesize",
+			cond = conditions.buffer_not_empty,
 		})
 
 		ins_right({

@@ -20,12 +20,12 @@ toggle_block() {
     local start="$1"
     local end="$2"
     # If there is at least one uncommented line in the block, comment all lines
-    if sed -n "/$start/,/$end/ {/^[^#]/p}" "$CONFIG" | grep -q 'windowrulev2'; then
+    if sed -n "/$start/,/$end/ {/^[^#]/p}" "$CONFIG" | grep -q 'windowrule'; then
         # Comment all lines
-        sed -i "/$start/,/$end/ s/^\(windowrulev2.*\)/#\1/" "$CONFIG"
+        sed -i "/$start/,/$end/ s/^\(windowrule.*\)/#\1/" "$CONFIG"
     else
         # Uncomment all lines
-        sed -i "/$start/,/$end/ s/^#\(windowrulev2.*\)/\1/" "$CONFIG"
+        sed -i "/$start/,/$end/ s/^#\(windowrule.*\)/\1/" "$CONFIG"
     fi
 }
 

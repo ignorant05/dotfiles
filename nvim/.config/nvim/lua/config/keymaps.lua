@@ -171,12 +171,6 @@ keymap("n", "<C-j>", "<C-w>k", opts_2) -- up window
 keymap("n", "<C-k>", "<C-w>j", opts_2) -- down window
 keymap("n", "<C-l>", "<C-w>l", opts_2) -- right window
 
--- Resize with arrows when using multiple windows
-keymap("n", "<C-Up>", ":resize -2<CR>", opts_1)
-keymap("n", "<c-down>", ":resize +2<cr>", opts_1)
-keymap("n", "<c-right>", ":vertical resize -2<cr>", opts_1)
-keymap("n", "<c-left>", ":vertical resize +2<cr>", opts_1)
-
 -- Buffer Navigation
 vim.keymap.set(
 	"n",
@@ -196,6 +190,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 -- Windows --
 --------------------------------------------------------------------------------------
 -- Window navigation
+keymap("n", "zt", ":terminal<CR>", opts_1)
 keymap("n", "zu", ":vs<CR>", opts_1)
 keymap("n", "zy", ":split<CR>", opts_1)
 keymap("n", "zq", ":close<CR>", opts_1)
@@ -203,6 +198,18 @@ keymap("n", "zl", ":wincmd l<CR>", opts_1)
 keymap("n", "zh", ":wincmd h<CR>", opts_1)
 keymap("n", "zk", ":wincmd k<CR>", opts_1)
 keymap("n", "zj", ":wincmd j<CR>", opts_1)
+
+-- Resize with arrows when using multiple windows
+keymap("n", "<c-up>", ":resize +2<cr>", opts_1)
+keymap("n", "<C-down>", ":resize -2<CR>", opts_1)
+keymap("n", "<c-right>", ":vertical resize -2<cr>", opts_1)
+keymap("n", "<c-left>", ":vertical resize +2<cr>", opts_1)
+
+-- Resize with arrows when using multiple windows
+keymap("n", "<C-k>", ":resize +2<cr>", opts_1)
+keymap("n", "<C-j>", ":resize -2<CR>", opts_1)
+keymap("n", "<c-h>", ":vertical resize -2<cr>", opts_1)
+keymap("n", "<c-l>", ":vertical resize +2<cr>", opts_1)
 
 -- window navigation in insert mode
 keymap("i", "<C-l>", "<esc><C-l>", opts_1)
@@ -221,6 +228,8 @@ keymap("t", "<esc>", "<C-\\><C-N>", opts_1)
 
 -- nvim .local/share/nvim/lazy/toggleterm.nvim/lua/toggleterm/config.lua
 -- go to the path above and change the default toggleterm direction from horizontal to float
+keymap("n", "<leader>t", ":ToggleTerm float<CR>", opts_1)
+
 keymap("n", "<leader>t", ":ToggleTerm float<CR>", opts_1)
 -- keymap("t", "<leader>t", "<C-\\><C-N> :ToggleTerm float<CR>", opts_1)
 
@@ -245,5 +254,33 @@ keyset("n", "<leader>dd", builtin.lsp_implementations, { desc = "implementation"
 -- Fold --
 --------------------------------------------------------------------------------------
 keyset("n", "aa", "zf%", opts_1)
-
---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
+-- Kubernetes & Helm charts --
+---------------------------------------------------------------------------------------
+local kube_utils_mappings = {
+	{ "<leader>k", group = "Kubernetes" }, -- Main title for all Kubernetes related commands
+	-- Helm Commands
+	{ "<leader>kh", group = "Helm" },
+	{ "<leader>khT", "<cmd>HelmDryRun<CR>", desc = "Helm DryRun Buffer" },
+	{ "<leader>khb", "<cmd>HelmDependencyBuildFromBuffer<CR>", desc = "Helm Dependency Build" },
+	{ "<leader>khd", "<cmd>HelmDeployFromBuffer<CR>", desc = "Helm Deploy Buffer to Context" },
+	{ "<leader>khr", "<cmd>RemoveDeployment<CR>", desc = "Helm Remove Deployment From Buffer" },
+	{ "<leader>kht", "<cmd>HelmTemplateFromBuffer<CR>", desc = "Helm Template From Buffer" },
+	{ "<leader>khu", "<cmd>HelmDependencyUpdateFromBuffer<CR>", desc = "Helm Dependency Update" },
+	-- Kubectl Commands
+	{ "<leader>kk", group = "Kubectl" },
+	{ "<leader>kkC", "<cmd>SelectSplitCRD<CR>", desc = "Download CRD Split" },
+	{ "<leader>kkD", "<cmd>DeleteNamespace<CR>", desc = "Kubectl Delete Namespace" },
+	{ "<leader>kkK", "<cmd>OpenK9s<CR>", desc = "Open K9s" },
+	{ "<leader>kka", "<cmd>KubectlApplyFromBuffer<CR>", desc = "Kubectl Apply From Buffer" },
+	{ "<leader>kkc", "<cmd>SelectCRD<CR>", desc = "Download CRD" },
+	{ "<leader>kkk", "<cmd>OpenK9sSplit<CR>", desc = "Split View K9s" },
+	{ "<leader>kkl", "<cmd>ToggleYamlHelm<CR>", desc = "Toggle YAML/Helm" },
+	-- Logs Commands
+	{ "<leader>kl", group = "Logs" },
+	{ "<leader>klf", "<cmd>JsonFormatLogs<CR>", desc = "Format JSON" },
+	{ "<leader>klv", "<cmd>ViewPodLogs<CR>", desc = "View Pod Logs" },
+}
+-- Register the Kube Utils keybindings
+require("which-key").add(kube_utils_mappings)
+-------------------------------------------------------------------------------------
