@@ -12,7 +12,7 @@ plugin = {
 		vim.keymap.set("n", "<leader>y", function()
 			harpoon:list():add()
 		end)
-		vim.keymap.set("n", "<A-z>", function()
+		vim.keymap.set("n", "<A-e>", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end)
 

@@ -10,6 +10,7 @@ plugin = {
 				ensure_installed = {
 					"clangd",
 					"clang-format",
+					"omnisharp",
 				},
 			},
 		}, -- NOTE: Must be loaded before dependants
@@ -25,6 +26,7 @@ plugin = {
 	},
 	config = function()
 		require("luasnip.loaders.from_vscode").lazy_load()
+
 		-- Brief aside: **What is LSP?**
 		--
 		-- LSP is an initialism you've probably heard, but might not understand what it is.
@@ -175,15 +177,6 @@ plugin = {
 			-- ts_ls = {}, -- tsserver is deprecated
 			tsp_server = {},
 			ruff = {},
-			omnisharp = {
-				cmd = { "/home/pebble/.local/share/omnisharp/OmniSharp" },
-				enable_roslyn_analyzers = true,
-				organize_imports_on_format = true,
-				enable_import_completion = true,
-				root_dir = function()
-					return vim.loop.cwd()
-				end,
-			},
 			pylsp = {
 				settings = {
 					pylsp = {
@@ -206,7 +199,77 @@ plugin = {
 			dockerls = {},
 			-- sqlls = {},
 			terraformls = {},
-			yamlls = {},
+			yamlls = {
+				settings = {
+					yaml = {
+						format = { enable = true },
+						validate = true,
+						customTags = {
+							"!Ref",
+							"!Sub",
+							"!GetAtt",
+							"!Join",
+							"!!map",
+							"!!seq",
+							"!!str",
+							"{{*}}",
+						},
+					},
+				},
+				on_attach = function(client, bufnr)
+					-- Disable formatting capability so yamlls cannot reformat Helm files
+					-- client.server_capabilities.documentFormattingProvider = false
+					vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+						pattern = "deployment.yaml",
+						callback = function()
+							vim.opt_local.filetype = "helm"
+						end,
+					})
+				end,
+			},
+			helm_ls = {
+				settings = {
+					["helm-ls"] = {
+						logLevel = "info",
+						valuesFiles = {
+							mainValuesFile = "values.yaml",
+							lintOverlayValuesFile = "values.lint.yaml",
+							additionalValuesFilesGlobPattern = "values*.yaml",
+						},
+						helmLint = {
+							enabled = true,
+							ignoredMessages = {},
+						},
+						yamlls = {
+							enabled = true,
+							enabledForFilesGlob = "*.{yaml,yml}",
+							diagnosticsLimit = 50,
+							showDiagnosticsDirectly = false,
+							path = "yaml-language-server",
+							initTimeoutSeconds = 3,
+							config = {
+								schemas = {
+									kubernetes = "templates/**",
+								},
+								completion = true,
+								hover = true,
+							},
+						},
+					},
+				},
+			},
+			rust_analyzer = {
+				settings = {
+					["rust-analyzer"] = {
+						cargo = {
+							allFeatures = true,
+						},
+						checkOnSave = {
+							command = "clippy",
+						},
+					},
+				},
+			},
 			clangd = {
 				cmd = { "clangd", "--compile-commands-dir=build" },
 				capabilities = capabilities,
@@ -284,11 +347,21 @@ plugin = {
 			},
 		})
 
-		vim.lsp.config("omnisharp", servers.omnisharp)
-		vim.lsp.enable("omnisharp")
+		vim.lsp.config("lua_ls", servers.lua_ls)
+		vim.lsp.enable("lua_ls")
 
 		vim.lsp.config("clangd", servers.clangd)
 		vim.lsp.enable("clangd")
+
+		-- vim.lsp.config("yamlls", servers.yamlls)
+		-- vim.lsp.enable("yamlls")
+
+		vim.lsp.config("helm_ls", servers.helm_ls)
+		vim.lsp.enable("helm_ls")
+
+		vim.lsp.config("rust_analyzer", servers.rust_analyzer)
+		vim.lsp.enable("rust_analyzer")
+
 		-- vim.lsp.config(omnisharp).setup({
 		-- 	cmd = { "/home/pebble/.local/share/omnisharp/OmniSharp" },
 		-- 	enable_roslyn_analyzers = true,
