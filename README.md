@@ -47,7 +47,7 @@ dotfiles/
 ├── wal/                   # Wal (Color scheme generator)
 ├── images/                # Snippets of images 
 └── README.md              # This file
-
+```
 ---
 
 ## Screenshots 
