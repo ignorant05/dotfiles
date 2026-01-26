@@ -45,4 +45,32 @@ dotfiles/
 ├── wlogout/               # Wlogout (logout screen) configuration
 ├── matugen/               # Matugen (Wallpaper setter) config
 ├── wal/                   # Wal (Color scheme generator)
+├── images/                # Snippets of images 
 └── README.md              # This file
+
+---
+
+## Screenshots 
+
+### Hyprland
+#### Home 
+![home](images/hypr/home.png)
+#### Power Options 
+![file](images/hypr/power.png)
+#### Rofi 
+![rofi](images/hypr/rofi.png)
+#### wall 
+![wall](images/hypr/wall.png)
+#### Theme paper changer (wallpapper + theme through pywal) 
+![themepaper](images/hypr/themepaper.png)
+
+### Nvim 
+#### Nvim home
+![nvim-home](images/nvim/nvim-home.png)
+#### Nvim code editing 
+![nvim-edit](images/nvim/nvim-edit.png)
+#### Nvim neotree 
+![nvim-neotree](images/nvim/nvim-neotree.png)
+#### Nvim terminal + tmux 
+![nvim-terminal](images/nvim/nvim-terminal.png)
+
