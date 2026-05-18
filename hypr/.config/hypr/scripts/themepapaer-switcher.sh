@@ -22,12 +22,12 @@ RANDOM_POS_INDEX=$((RANDOM % ${#TRANSITION_POSITIONS[@]}))
 
 RANDOM_TRANSITION_POS=${TRANSITION_POSITIONS[$RANDOM_POS_INDEX]}
 
-if ! pgrep -x "swww-daemon" > /dev/null; then
-    swww-daemon &
+if ! pgrep -x "awww-daemon" > /dev/null; then
+    awww-daemon &
     sleep 0.5
 fi
  
-swww img "$IMG" \
+awww img "$IMG" \
     --transition-type outer \
     --transition-pos $RANDOM_TRANSITION_POS \
     --transition-fps 60 \

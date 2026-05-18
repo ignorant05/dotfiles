@@ -14,6 +14,10 @@ export MANPAGER='nvim +Man!'
 # My Shortcuts 
 alias update="sudo pacman -Syu"
 alias i="yay -S"
+alias orphans="pacman -Qdtq"
+# finds large files in the disk
+alias filesfinder="du -h / 2>/dev/null | sort -rh | head -20"
+alias appdeps="du -sh ~/.cache/* | sort -rh"
 alias open="nvim ."
 alias hyprconfig="nvim ~/.config/hypr/"
 alias nvimconfig="nvim ~/.config/nvim/"
