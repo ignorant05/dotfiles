@@ -1,6 +1,4 @@
 require("config.lazy")
 require("config.options")
 require("config.keymaps")
--- vim.cmd("colorscheme aura-dark")
-
-vim.cmd("colorscheme kanagawa-wave")
+vim.cmd("colorscheme aura-dark")

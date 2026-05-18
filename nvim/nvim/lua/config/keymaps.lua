@@ -228,10 +228,10 @@ keymap("t", "<esc>", "<C-\\><C-N>", opts_1)
 
 -- nvim .local/share/nvim/lazy/toggleterm.nvim/lua/toggleterm/config.lua
 -- go to the path above and change the default toggleterm direction from horizontal to float
--- keymap("t", "<leader>t", "<C-\\><C-N> :ToggleTerm float<CR>", opts_1)
+keymap("n", "<leader>t", ":ToggleTerm float<CR>", opts_1)
 
-keymap("n", "<leader>t", "<C-\\><C-N>:FloatermToggle<CR>", opts_1)
-keymap("t", "<leader>t", "<C-\\><C-N>", opts_1)
+keymap("n", "<leader>t", ":ToggleTerm float<CR>", opts_1)
+-- keymap("t", "<leader>t", "<C-\\><C-N> :ToggleTerm float<CR>", opts_1)
 
 --Better terminal navigation
 keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)

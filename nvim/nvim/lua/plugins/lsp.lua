@@ -140,7 +140,7 @@ plugin = {
 				--
 				-- This may be unwanted, since they displace some of your code
 				if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-					map("<leader>zh", function()
+					map("<leader>th", function()
 						vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
 					end, "[T]oggle Inlay [H]ints")
 				end
@@ -198,6 +198,7 @@ plugin = {
 			tailwindcss = {},
 			dockerls = {},
 			-- sqlls = {},
+			terraformls = {},
 			yamlls = {
 				settings = {
 					yaml = {
@@ -225,37 +226,6 @@ plugin = {
 						end,
 					})
 				end,
-			},
-			terraformls = {
-				settings = {
-					["helm-ls"] = {
-						logLevel = "info",
-						valuesFiles = {
-							mainValuesFile = "values.yaml",
-							lintOverlayValuesFile = "values.lint.yaml",
-							additionalValuesFilesGlobPattern = "values*.yaml",
-						},
-						helmLint = {
-							enabled = true,
-							ignoredMessages = {},
-						},
-						yamlls = {
-							enabled = true,
-							enabledForFilesGlob = "*.{yaml,yml}",
-							diagnosticsLimit = 50,
-							showDiagnosticsDirectly = false,
-							path = "yaml-language-server",
-							initTimeoutSeconds = 3,
-							config = {
-								schemas = {
-									kubernetes = "templates/**",
-								},
-								completion = true,
-								hover = true,
-							},
-						},
-					},
-				},
 			},
 			helm_ls = {
 				settings = {
@@ -385,8 +355,6 @@ plugin = {
 
 		-- vim.lsp.config("yamlls", servers.yamlls)
 		-- vim.lsp.enable("yamlls")
-		vim.lsp.config("terraformls", servers.terraformls)
-		vim.lsp.enable("terraformls")
 
 		vim.lsp.config("helm_ls", servers.helm_ls)
 		vim.lsp.enable("helm_ls")
