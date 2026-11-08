@@ -1,41 +1,48 @@
 #!/usr/bin/env bash
 
 #// Check if wlogout is already running
-
 if pgrep -x "wlogout" >/dev/null; then
     pkill -x "wlogout"
     exit 0
 fi
 
-#// set file variables
-
-source "$HOME/.config/hypr/scripts/variables.sh"
-# scrDir=$(dirname "$(realpath "$0")")
-# shellcheck disable=SC1091
-source "$scrDir/globalcontrol.sh"
-[ -n "${1}" ] && wlogoutStyle="${1}"
-wlogoutStyle=${wlogoutStyle:-$WLOGOUT_STYLE}
+#// ---- config you can tweak ----
 confDir="${confDir:-$HOME/.config}"
+wlogoutStyle="${1:-1}"          # pass a number as arg1 to pick a style, defaults to 1
+BtnCol="${BtnCol:-white}"       # "white" for dark backgrounds, "black" for light
+hypr_border="${hypr_border:-10}"
+# --------------------------------
+
 wLayout="${confDir}/wlogout/layout_${wlogoutStyle}"
 wlTmplt="${confDir}/wlogout/style_${wlogoutStyle}.css"
+
 echo "wlogoutStyle: ${wlogoutStyle}"
 echo "wLayout: ${wLayout}"
 echo "wlTmplt: ${wlTmplt}"
 
 if [ ! -f "${wLayout}" ] || [ ! -f "${wlTmplt}" ]; then
-    echo "ERROR: Config ${wlogoutStyle} not found..."
+    echo "ERROR: Config ${wlogoutStyle} not found, falling back to style 1..."
     wlogoutStyle=1
     wLayout="${confDir}/wlogout/layout_${wlogoutStyle}"
     wlTmplt="${confDir}/wlogout/style_${wlogoutStyle}.css"
 fi
 
-#// detect monitor res
+if [ ! -f "${wLayout}" ] || [ ! -f "${wlTmplt}" ]; then
+    echo "ERROR: No valid wlogout layout/style found in ${confDir}/wlogout/"
+    exit 1
+fi
 
+#// detect monitor res
 x_mon=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .width')
 y_mon=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .height')
-hypr_scale=$(hyprctl -j monitors | jq '.[] | select (.focused == true) | .scale' | sed 's/\.//')
-#// scale config layout and style
+raw_scale=$(hyprctl -j monitors | jq '.[] | select(.focused==true) | .scale')
+# normalize to scale*100 as an integer, regardless of whether hyprctl prints
+# it as "1", "1.0", or "1.500000"
+hypr_scale=$(awk -v s="${raw_scale:-1}" 'BEGIN { printf "%d", (s * 100) }')
+hypr_scale="${hypr_scale:-100}"   # safety fallback so we never divide by empty/0
+[ "${hypr_scale}" -eq 0 ] && hypr_scale=100   # extra guard against div-by-zero
 
+#// scale config layout and style
 case "${wlogoutStyle}" in
 1)
     wlColms=6
@@ -49,40 +56,22 @@ case "${wlogoutStyle}" in
     export x_hvr=$((x_mon * 32 / hypr_scale))
     export y_hvr=$((y_mon * 20 / hypr_scale))
     ;;
+*)
+    wlColms=6
+    ;;
 esac
 
 #// scale font size
-
 export fntSize=$((y_mon * 2 / 100))
 
-#// detect wallpaper brightness
-
-cacheDir="${HYDE_CACHE_HOME}"
-dcol_mode="${dcol_mode:-dark}"
-# shellcheck disable=SC1091
-[ -f "${cacheDir}/wall.dcol" ] && source "${cacheDir}/wall.dcol"
-
-#  Theme mode: detects the color-scheme set in hypr.theme and falls back if nothing is parsed.
-enableWallDcol="${enableWallDcol:-1}"
-if [ "${enableWallDcol}" -eq 0 ]; then
-    HYDE_THEME_DIR="${HYDE_THEME_DIR:-$confDir/hyde/themes/$HYDE_THEME}"
-    dcol_mode=$(get_hyprConf "COLOR_SCHEME")
-    dcol_mode=${dcol_mode#prefer-}
-    # shellcheck disable=SC1091
-    [ -f "${HYDE_THEME_DIR}/theme.dcol" ] && source "${HYDE_THEME_DIR}/theme.dcol"
-fi
-{ [ "${dcol_mode}" == "dark" ] && export BtnCol="white"; } || export BtnCol="black"
+export BtnCol
 
 #// eval hypr border radius
-
-hypr_border="${hypr_border:-10}"
 export active_rad=$((hypr_border * 5))
 export button_rad=$((hypr_border * 8))
 
-#// eval config files
-
+#// eval config file (substitute the exported vars into the css template)
 wlStyle="$(envsubst <"${wlTmplt}")"
 
 #// launch wlogout
-
 wlogout -b "${wlColms}" -c 0 -r 0 -m 0 --layout "${wLayout}" --css <(echo "${wlStyle}") --protocol layer-shell

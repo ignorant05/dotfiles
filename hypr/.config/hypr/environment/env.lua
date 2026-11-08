@@ -1,0 +1,26 @@
+hl.env("XCURSOR_SIZE", "24")
+hl.env("HYPRCURSOR_SIZE", "24")
+
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+hl.env("GTK_THEME", "Adwaita:dark")
+
+--##################
+--## PERMISSIONS ###
+--##################
+
+-- See https://wiki.hyprland.org/Configuring/Permissions/
+-- Please note permission changes here require a Hyprland restart and are not applied on-the-fly
+-- for security reasons
+
+-- ecosystem {
+--   enforce_permissions = 1
+-- }
+
+-- permission = /usr/(bin|local/bin)/grim, screencopy, allow
+-- permission = /usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland, screencopy, allow
+-- permission = /usr/(bin|local/bin)/hyprpm, plugin, allow
+
+hl.on("config.reloaded", function()
+	hl.exec_cmd('gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"')
+	hl.exec_cmd('gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"')
+end)

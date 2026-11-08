@@ -13,7 +13,6 @@
     "reload_style_on_change": true,
 
 
-
 	"modules-left": [
             "custom/padd",
             "custom/l_end",
@@ -76,7 +75,7 @@
         "states": {
             "c": 90, // critical
             "h": 60, // high
-            "m": 30, // medium
+            "m": 30  // medium
         },
         "interval": 30,
         "format": "󰾆 {used} GB",
@@ -107,7 +106,7 @@
         "interval": 5, // once every 5 seconds
         "tooltip": true,
         "max-length": 1000,
-        "on-click": "gpuinfo.sh --toggle",
+        "on-click": "gpuinfo.sh --toggle"
     },
 
     "custom/gpuinfo#nvidia": {
@@ -117,7 +116,7 @@
         "rotate": 0,
         "interval": 5, // once every 5 seconds
         "tooltip": true,
-        "max-length": 1000,
+        "max-length": 1000
     },
 
     "custom/gpuinfo#amd": {
@@ -127,7 +126,7 @@
         "rotate": 0,
         "interval": 5, // once every 5 seconds
         "tooltip": true,
-        "max-length": 1000,
+        "max-length": 1000
     },
 
     "custom/gpuinfo#intel": {
@@ -137,7 +136,7 @@
         "rotate": 0,
         "interval": 5, // once every 5 seconds
         "tooltip": true,
-        "max-length": 1000,
+        "max-length": 1000
     },
 
  
